@@ -30,10 +30,15 @@ public class CannonShell : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Transform targetTransform = collision.GetComponent<Transform>();
+        Transform enemyTowerTransform = collision.GetComponent<Transform>();
 
-        if(targetTransform != null) 
+        if(enemyTowerTransform != null)
+        {
+            HealthSystem healthSystem = enemyTowerTransform.GetComponent<HealthSystem>();
+            healthSystem.Damage(10);
             Destroy(gameObject);
+        }
+            
     }
 
 }

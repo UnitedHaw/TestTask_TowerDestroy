@@ -10,52 +10,52 @@ public class Cannon : MonoBehaviour
     [SerializeField] private Transform aimTransform;
     private Transform shellSpawnPosition;
     private Transform cannonAim;
-
     private Touch touch;
-    private Vector3 touchStartPosition;
-    private float direction;
 
-    
 
     private void Awake()
     {
         Instance = this;
-        shellSpawnPosition = transform.Find("shellSpawnPosition");
         cannonAim = transform.Find("cannonAim");
+        shellSpawnPosition = cannonAim.Find("shellSpawnPosition");
     }
     private void Update()
-    {
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            Instantiate(pfCannonShell, shellSpawnPosition.position, Quaternion.identity);
-        }
-
+    {   
         GetTouchInput();
+        GetMouseInput();
+    }
+
+    private void GetMouseInput()
+    {
+        if(Input.GetMouseButton(0))
+        {
+            GetFolowAngleFromVector(UtilClass.GetMouseWorldPosition());
+        } 
     }
     private void GetTouchInput()
     {
         if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
-
             switch (touch.phase)
             {
                 case TouchPhase.Moved:
-
-                    var directionAngle = touchStartPosition - transform.position;
-                    var angle = Mathf.Atan(directionAngle.y / directionAngle.x) * Mathf.Rad2Deg;
-                    cannonAim.rotation = Quaternion.Euler(0, 0, angle);
-
-                    direction = touch.position.y > touchStartPosition.y ? 1f : -1f;
-
+                    GetFolowAngleFromVector(touch.position);
+                    break;
+                case TouchPhase.Ended:
+                    Instantiate(pfCannonShell, shellSpawnPosition.position, Quaternion.identity);
                     break;
                 default:
-                    touchStartPosition = touch.position;
-                    direction = 0;
                     break;
             }
         }     
+    }
+
+    private void GetFolowAngleFromVector(Vector3 vectorPos)
+    {
+        Vector3 aimDirection = (vectorPos - cannonAim.position).normalized;
+        float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        cannonAim.eulerAngles = new Vector3(0, 0, angle);
     }
     public Vector3 GetShotAimPosition()
     {
