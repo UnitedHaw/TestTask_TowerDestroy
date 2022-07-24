@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class CannonShell : MonoBehaviour
 {
+    public static CannonShell Create(Vector3 position)
+    {
+        Transform pfCannonShell = Resources.Load<Transform>("pfCannonShell");
+        Transform shellTransform = Instantiate(pfCannonShell, position, Quaternion.identity);
+
+        CannonShell cannonShell = shellTransform.GetComponent<CannonShell>();
+
+        return cannonShell;
+    }
+
     [SerializeField] private float shellSpeed = 10f;  
     private Vector3 moveDir; 
     private Vector3 aimDir;
