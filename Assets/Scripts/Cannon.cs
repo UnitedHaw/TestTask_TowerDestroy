@@ -6,7 +6,6 @@ public class Cannon : MonoBehaviour
 {
     public static Cannon Instance { get; private set; }
 
-    [SerializeField] private Transform pfCannonShell;
     [SerializeField] private Transform aimTransform;
     [SerializeField] private float shootTimerMax;
     private float shootTimer;
@@ -33,9 +32,6 @@ public class Cannon : MonoBehaviour
 
         GetMouseInput();
         GetTouchInput();
-
-
-
     }
 
     private void GetMouseInput()
@@ -73,6 +69,8 @@ public class Cannon : MonoBehaviour
     {
         Vector3 aimDirection = (vectorPos - cannonAim.position).normalized;
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        angle = Mathf.Clamp(angle, 90f, 320f);
+        Debug.Log(angle);
         cannonAim.eulerAngles = new Vector3(0, 0, angle);
     }
     private void HandleShooting()
