@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed = 1f;
-    private float angle;
+    [SerializeField] private float rotationSpeed;
+    [SerializeField] private LayerMask objectSelectionMask;
     private Transform shellSpawnPosition;
     private Transform cannonAim;
-    private bool isUp;
-    private bool isDown;
+    private Transform shootPoint;
+    private RaycastHit2D hit;
+
+    private float minRotationAngle = -0.9f;
+    private float maxRotationAngle = 0f;
+    private float rayDistance = 100f;
+    private bool inUpperDir;
+    private bool inDownDir;
 
     
 
@@ -17,34 +23,57 @@ public class EnemyAI : MonoBehaviour
     {
         cannonAim = transform.Find("cannonAim");
         shellSpawnPosition = cannonAim.Find("shellSpawnPosition");
-        isDown = true;
-        isUp = false;
+        inDownDir = true;
+        inUpperDir = false;
     }
 
     private void Update()
     {
         CannonRotationHandler();
+
+        RaycastHit2D hitInfo = Physics2D.Raycast(cannonAim.position, cannonAim.up, rayDistance);
+        if(hitInfo.collider != null)
+        {
+            Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.green);
+            if(hitInfo.collider.CompareTag("Player"))
+            {
+                CannonShell.Create(shellSpawnPosition.position, hit.point);
+                Debug.Log("Пиф! Паф!");
+            }
+        }
+        else
+        {
+
+        }
+
+        //var ray = new Ray(cannonAim.position, cannonAim.right);
+        //Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.green);
+
+        //if(Physics.Raycast(ray, out hit, rayDistance, objectSelectionMask) != false)
+        //{
+        //    CannonShell.Create(shellSpawnPosition.position);
+        //}
     }
 
     private void CannonRotationHandler()
     {
-        if (isDown == true && cannonAim.rotation.z >= -0.9f)
+        if (inDownDir == true && cannonAim.rotation.z >= minRotationAngle)
         {
             cannonAim.Rotate(Vector3.back * Time.deltaTime * rotationSpeed);
-            if (cannonAim.rotation.z <= -0.9f)
+            if (cannonAim.rotation.z <= minRotationAngle)
             {
-                isDown = false;
-                isUp = true;
+                inDownDir = false;
+                inUpperDir = true;
             }
         }
 
-        if (isUp == true && cannonAim.rotation.z <= 0f)
+        if (inUpperDir == true && cannonAim.rotation.z <= maxRotationAngle)
         {
             cannonAim.Rotate(Vector3.forward * Time.deltaTime * rotationSpeed);
-            if (cannonAim.rotation.z >= 0f)
+            if (cannonAim.rotation.z >= maxRotationAngle)
             {
-                isDown = true;
-                isUp = false;
+                inDownDir = true;
+                inUpperDir = false;
             }
         }
     }

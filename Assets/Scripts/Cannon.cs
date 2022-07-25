@@ -9,7 +9,7 @@ public class Cannon : MonoBehaviour
     [SerializeField] private Transform aimTransform;
     [SerializeField] private float shootTimerMax;
     private float shootTimer;
-    private Transform shellSpawnPosition;
+    private Transform shellSpawnPoint;
     private Transform cannonAim;
 
     private Touch touch;
@@ -22,7 +22,7 @@ public class Cannon : MonoBehaviour
         Instance = this;
         
         cannonAim = transform.Find("cannonAim");
-        shellSpawnPosition = cannonAim.Find("shellSpawnPosition");
+        shellSpawnPoint = cannonAim.Find("shellSpawnPosition");
     }
     private void Update()
     {
@@ -74,7 +74,7 @@ public class Cannon : MonoBehaviour
         if(shootTimer <= 0f)
         {
             shootTimer += shootTimerMax;
-            CannonShell.Create(shellSpawnPosition.position);
+            CannonShell.Create(shellSpawnPoint.position, GetShotAimPosition());
         }  
     }
     public Vector3 GetShotAimPosition()
