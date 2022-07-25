@@ -8,7 +8,8 @@ public class EnemyAI : MonoBehaviour
     private float angle;
     private Transform shellSpawnPosition;
     private Transform cannonAim;
-    private bool isStoped;
+    private bool isUp;
+    private bool isDown;
 
     
 
@@ -16,32 +17,35 @@ public class EnemyAI : MonoBehaviour
     {
         cannonAim = transform.Find("cannonAim");
         shellSpawnPosition = cannonAim.Find("shellSpawnPosition");
+        isDown = true;
+        isUp = false;
     }
 
     private void Update()
     {
-        Debug.Log(Mathf.Atan(cannonAim.rotation.z) *Mathf.Rad2Deg);
-        angle = Mathf.Atan(cannonAim.rotation.z) * Mathf.Rad2Deg;
-        Mathf.Clamp(angle, 0, 40);
+        CannonRotationHandler();
+    }
 
-        if (angle < -40 && isStoped == false)
+    private void CannonRotationHandler()
+    {
+        if (isDown == true && cannonAim.rotation.z >= -0.9f)
         {
-            isStoped = true;
-            cannonAim.Rotate(Vector3.forward * 2 * rotationSpeed * rotationSpeed);
+            cannonAim.Rotate(Vector3.back * Time.deltaTime * rotationSpeed);
+            if (cannonAim.rotation.z <= -0.9f)
+            {
+                isDown = false;
+                isUp = true;
+            }
         }
-        else
+
+        if (isUp == true && cannonAim.rotation.z <= 0f)
         {
-            cannonAim.Rotate(Vector3.back * rotationSpeed * rotationSpeed);
-            isStoped = false;
+            cannonAim.Rotate(Vector3.forward * Time.deltaTime * rotationSpeed);
+            if (cannonAim.rotation.z >= 0f)
+            {
+                isDown = true;
+                isUp = false;
+            }
         }
-
-
-
-        //if (cannonAim.rotation.z >= 0f)
-        //    cannonAim.Rotate(Vector3.back * rotationSpeed * rotationSpeed);
-
-        //if (cannonAim.rotation.z <= -120f)
-        //    cannonAim.Rotate(Vector3.forward * rotationSpeed * rotationSpeed);
-
     }
 }

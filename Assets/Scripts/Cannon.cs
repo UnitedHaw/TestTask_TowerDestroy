@@ -54,14 +54,12 @@ public class Cannon : MonoBehaviour
             touchStartPosition.z = 0f;
             switch (touch.phase)
             {
-                case TouchPhase.Moved:
-                    
+                case TouchPhase.Moved:                   
                     GetFolowAngleFromVector(touchStartPosition);
                     break;
                 case TouchPhase.Ended:
                     HandleShooting();
                     break;
-
             }
         }     
     }
@@ -69,8 +67,6 @@ public class Cannon : MonoBehaviour
     {
         Vector3 aimDirection = (vectorPos - cannonAim.position).normalized;
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-        angle = Mathf.Clamp(angle, 90f, 320f);
-        Debug.Log(angle);
         cannonAim.eulerAngles = new Vector3(0, 0, angle);
     }
     private void HandleShooting()
