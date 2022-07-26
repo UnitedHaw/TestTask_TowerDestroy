@@ -8,7 +8,6 @@ public class CannonShell : MonoBehaviour
     {
         Transform pfCannonShell = Resources.Load<Transform>("pfCannonShell");
         Transform shellTransform = Instantiate(pfCannonShell, position, Quaternion.identity);
-
         CannonShell cannonShell = shellTransform.GetComponent<CannonShell>();
         cannonShell.SetTarget(shellTarget);
         return cannonShell;
@@ -19,16 +18,12 @@ public class CannonShell : MonoBehaviour
     private Vector3 shellTargetPosition;
     private float timeToDestroy = 5f;
 
-    private void Start()
-    {
-        
-    }
     private void Update()
     {
         Vector3 shotDir = (shellTargetPosition - transform.position).normalized;
 
         if (transform.position != shotDir)
-            transform.position += shellSpeed * Time.deltaTime * shotDir;
+            transform.position += Time.deltaTime * shotDir * shellSpeed;
         else
             transform.position = moveDir;
 
@@ -44,13 +39,17 @@ public class CannonShell : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Transform enemyTowerTransform = collision.GetComponent<Transform>();
+        Transform enemyTargetTransform = collision.GetComponent<Transform>();
 
-        if(enemyTowerTransform != null)
+        if(enemyTargetTransform != null)
         {
-            HealthSystem healthSystem = enemyTowerTransform.GetComponent<HealthSystem>();
-            healthSystem.Damage(10);
-            Destroy(gameObject);
+            if(enemyTargetTransform.CompareTag("Player") || enemyTargetTransform.CompareTag("Enemy"))
+            {
+                HealthSystem healthSystem = enemyTargetTransform.GetComponent<HealthSystem>();
+                Debug.Log(healthSystem.gameObject.name);
+                healthSystem.Damage(10);
+                Destroy(gameObject);
+            }    
         }
             
     }

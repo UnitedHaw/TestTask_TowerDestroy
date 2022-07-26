@@ -11,10 +11,8 @@ public class Cannon : MonoBehaviour
     private float shootTimer;
     private Transform shellSpawnPoint;
     private Transform cannonAim;
-
+    private Vector3 touchStartPosition;
     private Touch touch;
-    Vector3 touchStartPosition;
-    public float offset;
 
 
     private void Awake()
@@ -25,11 +23,8 @@ public class Cannon : MonoBehaviour
         shellSpawnPoint = cannonAim.Find("shellSpawnPosition");
     }
     private void Update()
-    {
-        shootTimer -= Time.deltaTime;
-        if (Mathf.Abs(shootTimer) > shootTimerMax)
-            shootTimer = shootTimerMax;
-
+    {    
+        ShotDelay();
         GetMouseInput();
         GetTouchInput();
     }
@@ -45,6 +40,12 @@ public class Cannon : MonoBehaviour
             HandleShooting();
         }
     }
+    private void ShotDelay()
+    {
+        shootTimer -= Time.deltaTime;
+        if (Mathf.Abs(shootTimer) > shootTimerMax)
+            shootTimer = shootTimerMax;
+    }
     private void GetTouchInput()
     {
         if (Input.touchCount > 0)
@@ -52,6 +53,7 @@ public class Cannon : MonoBehaviour
             touch = Input.GetTouch(0);
             touchStartPosition = Camera.main.ScreenToWorldPoint(touch.position);
             touchStartPosition.z = 0f;
+
             switch (touch.phase)
             {
                 case TouchPhase.Moved:                   

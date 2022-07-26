@@ -5,19 +5,14 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private LayerMask objectSelectionMask;
     private Transform shellSpawnPosition;
     private Transform cannonAim;
-    private Transform shootPoint;
-    private RaycastHit2D hit;
 
     private float minRotationAngle = -0.9f;
     private float maxRotationAngle = 0f;
     private float rayDistance = 100f;
     private bool inUpperDir;
     private bool inDownDir;
-
-    
 
     private void Awake()
     {
@@ -31,28 +26,31 @@ public class EnemyAI : MonoBehaviour
     {
         CannonRotationHandler();
 
-        RaycastHit2D hitInfo = Physics2D.Raycast(cannonAim.position, cannonAim.up, rayDistance);
-        if(hitInfo.collider != null)
+        RaycastHit2D[] hitsInfo = Physics2D.RaycastAll(cannonAim.position, cannonAim.up, rayDistance);
+        Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.green);
+
+        for(int i = 0; i < hitsInfo.Length; i++)
         {
-            Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.green);
-            if(hitInfo.collider.CompareTag("Player"))
-            {
-                CannonShell.Create(shellSpawnPosition.position, hit.point);
-                Debug.Log("Пиф! Паф!");
+            if (hitsInfo[i].collider != null)
+            {        
+                Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.red);
+                if (hitsInfo[i].collider.CompareTag("Player"))
+                {
+                    RandomShooting(hitsInfo[i].point);
+                }
             }
-        }
-        else
+        }     
+    }
+
+    private void RandomShooting(Vector3 target)
+    {
+        int rnd = Random.Range(0, 1000);
+        int shootChance = 3;
+        
+        if (shootChance > rnd)
         {
-
+            CannonShell.Create(shellSpawnPosition.position, target);
         }
-
-        //var ray = new Ray(cannonAim.position, cannonAim.right);
-        //Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.green);
-
-        //if(Physics.Raycast(ray, out hit, rayDistance, objectSelectionMask) != false)
-        //{
-        //    CannonShell.Create(shellSpawnPosition.position);
-        //}
     }
 
     private void CannonRotationHandler()

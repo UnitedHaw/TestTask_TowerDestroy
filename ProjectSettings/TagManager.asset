@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - CannonAim
+  - Tower
+  - EnemyShild
+  - PlayerShild
+  - Enemy
   layers:
   - Default
   - TransparentFX
