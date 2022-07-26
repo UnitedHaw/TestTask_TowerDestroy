@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class Construction : MonoBehaviour
 {
     private HealthSystem healthSystem;
     private void Start()

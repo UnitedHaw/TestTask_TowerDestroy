@@ -9,6 +9,7 @@ public class CannonShell : MonoBehaviour
         Transform pfCannonShell = Resources.Load<Transform>("pfCannonShell");
         Transform shellTransform = Instantiate(pfCannonShell, position, Quaternion.identity);
         CannonShell cannonShell = shellTransform.GetComponent<CannonShell>();
+
         cannonShell.SetTarget(shellTarget);
         return cannonShell;
     }
@@ -20,6 +21,11 @@ public class CannonShell : MonoBehaviour
 
     private void Update()
     {
+        if(shellTargetPosition == null)
+        {
+            shellTargetPosition = moveDir;
+        }
+
         Vector3 shotDir = (shellTargetPosition - transform.position).normalized;
 
         if (transform.position != shotDir)
