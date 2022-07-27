@@ -54,11 +54,11 @@ public class CannonShell : MonoBehaviour
         Transform enemyTargetTransform = collision.GetComponent<Transform>();
 
         if(enemyTargetTransform != null)
-        {         
+        {
             if(enemyTargetTransform.CompareTag("Player") || enemyTargetTransform.CompareTag("Enemy"))
             {
                 if(enemyTargetTransform.tag != cannonTag)
-                {
+                {                    
                     HealthSystem healthSystem = enemyTargetTransform.GetComponent<HealthSystem>();
                     healthSystem.Damage(10);
                     Destroy(gameObject);

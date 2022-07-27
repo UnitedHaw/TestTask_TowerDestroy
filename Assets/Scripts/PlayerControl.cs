@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Cannon : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
-    public static Cannon Instance { get; private set; }
+    public static PlayerControl Instance { get; private set; }
+
+    public static bool HasPlayerShild;
 
     [SerializeField] private Transform aimTransform;
+    [SerializeField] private Transform shildSpawnPoint;
     [SerializeField] private float shootTimerMax;
     private float shootTimer;
     private Transform shellSpawnPoint;
@@ -78,6 +83,15 @@ public class Cannon : MonoBehaviour
             shootTimer += shootTimerMax;
             CannonShell.Create(shellSpawnPoint.position, GetShotAimPosition(), transform.tag);
         }  
+    }
+    public void EnableShild()
+    {
+        if (HasPlayerShild != true)
+        {
+            HasPlayerShild = true;
+            Transform pfPlayerShild = Resources.Load<Transform>("pfPlayerShild");
+            Shild.Create(shildSpawnPoint.position, pfPlayerShild);
+        }
     }
     public Vector3 GetShotAimPosition()
     {

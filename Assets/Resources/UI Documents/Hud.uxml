@@ -4,17 +4,17 @@
         <ui:VisualElement name="enemyHudContainer" style="width: 40%; height: 100%; top: 0; left: 0; max-width: 100%; max-height: 100%; flex-grow: 1;">
             <ui:VisualElement name="healthbar" style="height: 30px; width: 500px; left: 50px; top: 50px;">
                 <ui:VisualElement name="background" style="flex-grow: 1; background-color: rgb(202, 202, 202); -unity-background-scale-mode: stretch-to-fill; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
-                    <ui:VisualElement name="foreground" style="flex-grow: 1; -unity-background-image-tint-color: rgb(190, 190, 190); transform-origin: left bottom; background-color: rgb(33, 180, 120); border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;" />
+                    <ui:VisualElement name="enemyHealthBar" style="flex-grow: 1; -unity-background-image-tint-color: rgb(190, 190, 190); transform-origin: left bottom; background-color: rgb(33, 180, 120); border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="pauseBtnContainer" style="justify-content: flex-start; width: 20%; height: 100%; align-items: center; top: 0; max-width: 100%; max-height: 100%; flex-grow: 1;">
-            <ui:Button text="Button" display-tooltip-when-elided="true" name="pauseBtn" class="circleBtn-style" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="pauseBtn" class="circleBtn-style" style="background-color: rgba(255, 255, 255, 0);" />
         </ui:VisualElement>
         <ui:VisualElement name="playerHudContainer" style="width: 40%; height: 100%; top: 0; left: 0; align-items: flex-end; right: 0; bottom: 0; max-width: 100%; max-height: 100%; flex-grow: 1;">
             <ui:VisualElement name="healthbar" style="height: 30px; width: 500px; top: 50px; right: 50px;">
                 <ui:VisualElement name="background" style="flex-grow: 1; background-color: rgb(202, 202, 202); -unity-background-scale-mode: stretch-to-fill; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
-                    <ui:VisualElement name="foreground" style="flex-grow: 1; -unity-background-image-tint-color: rgb(190, 190, 190); transform-origin: left bottom; background-color: rgb(33, 180, 120); border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; max-width: none;" />
+                    <ui:VisualElement name="playerHealthBar" style="flex-grow: 1; -unity-background-image-tint-color: rgb(190, 190, 190); transform-origin: center; background-color: rgb(33, 180, 120); border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; max-width: none; align-items: flex-end; -unity-text-align: upper-left; flex-direction: row-reverse; left: initial; rotate: 180deg;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

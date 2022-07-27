@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    public static bool HasEnemyShild;
+
+    [SerializeField] private Transform shildSpawnPoint;
     [SerializeField] private float rotationSpeed;
     private Transform shellSpawnPosition;
     private Transform cannonAim;
+    private WaitForSeconds delay;
 
     private float shootTargetOffset = 5f;
     private float minRotationAngle = -0.9f;
     private float maxRotationAngle = 0f;
     private float rayDistance = 100f;
+    private float shildEnableAtteptInterval = 2f;
     private bool inUpperDir;
     private bool inDownDir;
+
 
     private void Awake()
     {
@@ -21,6 +27,11 @@ public class EnemyAI : MonoBehaviour
         shellSpawnPosition = cannonAim.Find("shellSpawnPosition");
         inDownDir = true;
         inUpperDir = false;
+    }
+    private void Start()
+    {
+        delay = new WaitForSeconds(shildEnableAtteptInterval);
+        StartCoroutine(TryEnableShild());
     }
 
     private void Update()
@@ -75,5 +86,28 @@ public class EnemyAI : MonoBehaviour
                 inUpperDir = false;
             }
         }
+    }
+    private IEnumerator TryEnableShild()
+    {
+        while(true)
+        {
+            if (HasEnemyShild == false)
+            {
+                var rnd = Random.Range(0, 10);
+                Debug.Log(rnd);
+                if (rnd == 2)
+                {
+                    EnableShild();
+                    HasEnemyShild = true;
+                }
+                yield return delay;
+            }
+        }     
+    }
+    public void EnableShild()
+    {
+         HasEnemyShild = true;
+         Transform pfPlayerShild = Resources.Load<Transform>("pfEnemyShild");
+         Shild.Create(shildSpawnPoint.position, pfPlayerShild);
     }
 }

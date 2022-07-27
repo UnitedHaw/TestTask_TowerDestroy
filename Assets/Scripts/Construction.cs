@@ -13,6 +13,16 @@ public class Construction : MonoBehaviour
     }
     private void HealthSystem_OnDied(object sender, System.EventArgs e)
     {
+        Shild shild = GetComponent<Shild>();
+        if(shild.tag == "Player")
+        {
+            PlayerControl.HasPlayerShild = false;
+        }
+
+        if (shild.tag == "Enemy")
+        {
+            EnemyAI.HasEnemyShild = false;
+        }
         Destroy(gameObject);
     }
 }

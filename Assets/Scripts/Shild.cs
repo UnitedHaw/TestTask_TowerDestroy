@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Shild : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static Shild Create(Vector3 position, Transform pfShild)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Transform shildTransform = Instantiate(pfShild, position, Quaternion.identity);
+        Shild shild = shildTransform.GetComponent<Shild>();
+        return shild;
     }
 }
