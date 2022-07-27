@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour
     private Transform shellSpawnPosition;
     private Transform cannonAim;
 
+    private float shootTargetOffset = 5f;
     private float minRotationAngle = -0.9f;
     private float maxRotationAngle = 0f;
     private float rayDistance = 100f;
@@ -36,10 +37,10 @@ public class EnemyAI : MonoBehaviour
                 Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.red);
                 if (hitsInfo[i].collider.CompareTag("Player"))
                 {
-                    RandomShooting(hitsInfo[i].point);
+                    RandomShooting(hitsInfo[i].point * shootTargetOffset);
                 }
             }
-        }     
+        }    
     }
 
     private void RandomShooting(Vector3 target)
@@ -49,7 +50,7 @@ public class EnemyAI : MonoBehaviour
         
         if (shootChance > rnd)
         {
-            CannonShell.Create(shellSpawnPosition.position, target);
+            CannonShell.Create(shellSpawnPosition.position, target, transform.tag);
         }
     }
 

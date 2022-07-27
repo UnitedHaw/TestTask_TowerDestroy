@@ -76,7 +76,7 @@ public class Cannon : MonoBehaviour
         if(shootTimer <= 0f)
         {
             shootTimer += shootTimerMax;
-            CannonShell.Create(shellSpawnPoint.position, GetShotAimPosition());
+            CannonShell.Create(shellSpawnPoint.position, GetShotAimPosition(), transform.tag);
         }  
     }
     public Vector3 GetShotAimPosition()
