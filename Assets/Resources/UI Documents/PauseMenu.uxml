@@ -2,9 +2,9 @@
     <Style src="project://database/Assets/PauseBtnStyle.uss?fileID=7433441132597879392&amp;guid=bb2ef306e46836f43b542982cff71568&amp;type=3#PauseBtnStyle" />
     <ui:VisualElement name="background" style="flex-grow: 1; align-items: center; background-color: rgba(0, 0, 0, 0.55); opacity: 1;">
         <ui:VisualElement name="menuBackground" style="background-color: rgb(255, 255, 255); width: 80%; height: 80%; justify-content: center; border-top-left-radius: 60px; border-bottom-left-radius: 60px; border-top-right-radius: 60px; border-bottom-right-radius: 60px; align-items: center; top: 10%;">
-            <ui:Label text="Pause" display-tooltip-when-elided="true" name="title" enable-rich-text="false" style="font-size: 120px; -unity-font: resource(&apos;supercell-magic&apos;); -unity-font-definition: resource(&apos;supercell-magic SDF&apos;); -unity-text-align: upper-center; color: rgb(241, 91, 62); justify-content: flex-start; top: 50px; display: flex; bottom: auto; position: absolute; left: 658px;" />
+            <ui:Label text="Pause" display-tooltip-when-elided="true" name="title" enable-rich-text="false" style="font-size: 120px; -unity-font: resource(&apos;supercell-magic&apos;); -unity-font-definition: resource(&apos;supercell-magic SDF&apos;); -unity-text-align: upper-center; color: rgb(241, 91, 62); justify-content: flex-start; top: auto; display: flex; bottom: 100px; position: relative; left: auto; align-items: center;" />
             <ui:Button text="Restart" display-tooltip-when-elided="true" name="restartBtn" class="pauseBtn-style" style="width: 35%; height: 13%;" />
-            <ui:Button text="Resume" display-tooltip-when-elided="true" name="resumetBtn" class="pauseBtn-style" style="width: 35%; height: 13%;" />
+            <ui:Button text="Resume" display-tooltip-when-elided="true" name="resumeBtn" class="pauseBtn-style" style="width: 35%; height: 13%;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
