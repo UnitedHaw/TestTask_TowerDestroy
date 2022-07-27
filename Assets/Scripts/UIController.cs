@@ -59,12 +59,15 @@ public class UIController : MonoBehaviour
 
         shildActivationBtn.clicked += (() =>
         {
-            Hide(shildActivationBtn);
-            Show(shildBtnDisabledContainer);
-            PlayerControl.Instance.EnableShild();
+            if(PlayerControl.HasShild != true)
+            {
+                Hide(shildActivationBtn);
+                Show(shildBtnDisabledContainer);
+                PlayerControl.Instance.EnableShild();
 
-            timerEnabled = true;
-            shildDisableTimeLeft = shildDisableTimer;
+                timerEnabled = true;
+                shildDisableTimeLeft = shildDisableTimer;
+            } 
         });
 
         resumeBtn.clicked += (() => {

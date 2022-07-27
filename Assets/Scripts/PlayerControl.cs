@@ -16,6 +16,7 @@ public class PlayerControl : MonoBehaviour
     private float shootTimer;
     private Transform shellSpawnPoint;
     private Transform cannonAim;
+    private Shild shildTransform;
     private Vector3 touchStartPosition;
     private Touch touch;
 
@@ -87,11 +88,11 @@ public class PlayerControl : MonoBehaviour
 
     public void EnableShild()
     {
-        if (HasShild != true)
+        if (HasShild != true && shildTransform == null)
         {
             HasShild = true;
             Transform pfPlayerShild = GameAssets.Instance.pfPlayerShild;
-            Shild.Create(shildSpawnPoint.position, pfPlayerShild);
+            shildTransform = Shild.Create(shildSpawnPoint.position, pfPlayerShild);
             Debug.Log("Shild Activated!");
         }
     }

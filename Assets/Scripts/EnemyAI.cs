@@ -116,7 +116,7 @@ public class EnemyAI : MonoBehaviour
     private void RandomShooting(Vector3 target)
     {
         int rnd = Random.Range(0, 1000);
-        int shootChance = 3;
+        int shootChance = 1;
         
         if (shootChance > rnd)
         {
