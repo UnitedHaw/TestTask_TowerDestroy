@@ -6,11 +6,12 @@ public class CannonShell : MonoBehaviour
 {
     public static CannonShell Create(Vector3 position, Vector3 shellTarget, string tag)
     {
-        Transform pfCannonShell = Resources.Load<Transform>("pfCannonShell");
+        Transform pfCannonShell = GameAssets.Instance.pfCannonShell;
         Transform shellTransform = Instantiate(pfCannonShell, position, Quaternion.identity);
         CannonShell cannonShell = shellTransform.GetComponent<CannonShell>();
         cannonShell.SetTarget(shellTarget);
         cannonShell.GetTag(tag);
+        SoundManager.Instance.PlaySound(SoundManager.Sound.CanonSound);
 
         return cannonShell;
     }
@@ -61,7 +62,9 @@ public class CannonShell : MonoBehaviour
                 {                    
                     HealthSystem healthSystem = enemyTargetTransform.GetComponent<HealthSystem>();
                     healthSystem.Damage(10);
-                    Destroy(gameObject);
+                    Instantiate(GameAssets.Instance.pfDestroyedParticles, transform.position, Quaternion.identity);
+                    SoundManager.Instance.PlaySound(SoundManager.Sound.ShellSound);
+                    Destroy(gameObject);                  
                 }  
             }    
         }

@@ -8,6 +8,7 @@ public class Shild : MonoBehaviour
     {
         Transform shildTransform = Instantiate(pfShild, position, Quaternion.identity);
         Shild shild = shildTransform.GetComponent<Shild>();
+        SoundManager.Instance.PlaySound(SoundManager.Sound.ShildActivated);
         return shild;
     }
 }

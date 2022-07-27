@@ -14,15 +14,20 @@ public class Construction : MonoBehaviour
     private void HealthSystem_OnDied(object sender, System.EventArgs e)
     {
         Shild shild = GetComponent<Shild>();
-        if(shild.tag == "Player")
+        if(shild != null)
         {
-            PlayerControl.HasPlayerShild = false;
-        }
+            if (shild.CompareTag("Player"))
+            {
+                PlayerControl.HasShild = false;
+            }
 
-        if (shild.tag == "Enemy")
-        {
-            EnemyAI.HasEnemyShild = false;
-        }
-        Destroy(gameObject);
+            if (shild.CompareTag("Enemy"))
+            {
+                EnemyAI.HasEnemyShild = false;
+            }
+        } 
+        Instantiate(GameAssets.Instance.pfTowerDestroyedParticles, transform.position, Quaternion.identity);
+        SoundManager.Instance.PlaySound(SoundManager.Sound.BuildingDestroy);
+        Destroy(gameObject);       
     }
 }

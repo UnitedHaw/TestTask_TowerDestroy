@@ -8,7 +8,7 @@ public class PlayerControl : MonoBehaviour
 {
     public static PlayerControl Instance { get; private set; }
 
-    public static bool HasPlayerShild;
+    public static bool HasShild;
 
     [SerializeField] private Transform aimTransform;
     [SerializeField] private Transform shildSpawnPoint;
@@ -84,13 +84,15 @@ public class PlayerControl : MonoBehaviour
             CannonShell.Create(shellSpawnPoint.position, GetShotAimPosition(), transform.tag);
         }  
     }
+
     public void EnableShild()
     {
-        if (HasPlayerShild != true)
+        if (HasShild != true)
         {
-            HasPlayerShild = true;
-            Transform pfPlayerShild = Resources.Load<Transform>("pfPlayerShild");
+            HasShild = true;
+            Transform pfPlayerShild = GameAssets.Instance.pfPlayerShild;
             Shild.Create(shildSpawnPoint.position, pfPlayerShild);
+            Debug.Log("Shild Activated!");
         }
     }
     public Vector3 GetShotAimPosition()

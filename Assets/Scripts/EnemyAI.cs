@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
@@ -16,11 +15,12 @@ public class EnemyAI : MonoBehaviour
     private float minRotationAngle = -0.9f;
     private float maxRotationAngle = 0f;
     private float rayDistance = 100f;
-    private float shildEnableAtteptInterval = 2f;
+    private float shildEnableAtteptInterval = 5f;
+    private float shildColdown = 15f;
     private bool inUpperDir;
     private bool inDownDir;
 
-
+    private bool ShildTimerEnabled;
     private void Awake()
     {
         cannonAim = transform.Find("cannonAim");
@@ -32,36 +32,43 @@ public class EnemyAI : MonoBehaviour
     {
         delay = new WaitForSeconds(shildEnableAtteptInterval);
         StartCoroutine(TryEnableShild());
+
     }
 
     private void Update()
     {
         CannonRotationHandler();
-
-        RaycastHit2D[] hitsInfo = Physics2D.RaycastAll(cannonAim.position, cannonAim.up, rayDistance);
-        Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.green);
-
-        for(int i = 0; i < hitsInfo.Length; i++)
-        {
-            if (hitsInfo[i].collider != null)
-            {        
-                Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.red);
-                if (hitsInfo[i].collider.CompareTag("Player"))
-                {
-                    RandomShooting(hitsInfo[i].point * shootTargetOffset);
-                }
-            }
-        }    
+        EnemyScaner();     
     }
 
-    private void RandomShooting(Vector3 target)
-    {
-        int rnd = Random.Range(0, 1000);
-        int shootChance = 3;
-        
-        if (shootChance > rnd)
+    private IEnumerator TryEnableShild()
+    {        
+        while (true)
         {
-            CannonShell.Create(shellSpawnPosition.position, target, transform.tag);
+            if (HasEnemyShild == false && ShildTimerEnabled == false)
+            {
+                Debug.Log("Пробую включить щит...");
+
+                if (Random.Range(0, 5) == 2)
+                {
+                    EnableShild();
+                    Debug.Log("А вот и щит!");
+                    HasEnemyShild = true;
+                }
+            }
+            yield return delay;
+
+            if (HasEnemyShild)
+            {
+                for (int i = 0; i <= shildColdown - shildEnableAtteptInterval; i++)
+                {
+                    yield return new WaitForSeconds(1f);
+                    if (i == 15)
+                    {
+                        ShildTimerEnabled = false;
+                    }
+                }
+            }
         }
     }
 
@@ -87,27 +94,41 @@ public class EnemyAI : MonoBehaviour
             }
         }
     }
-    private IEnumerator TryEnableShild()
+
+    private void EnemyScaner()
     {
-        while(true)
+        RaycastHit2D[] hitsInfo = Physics2D.RaycastAll(cannonAim.position, cannonAim.up, rayDistance);
+        Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.green);
+
+        for (int i = 0; i < hitsInfo.Length; i++)
         {
-            if (HasEnemyShild == false)
+            if (hitsInfo[i].collider != null)
             {
-                var rnd = Random.Range(0, 10);
-                Debug.Log(rnd);
-                if (rnd == 2)
+                Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.red);
+                if (hitsInfo[i].collider.CompareTag("Player"))
                 {
-                    EnableShild();
-                    HasEnemyShild = true;
+                    RandomShooting(hitsInfo[i].point * shootTargetOffset);
                 }
-                yield return delay;
             }
-        }     
+        }
     }
+
+    private void RandomShooting(Vector3 target)
+    {
+        int rnd = Random.Range(0, 1000);
+        int shootChance = 3;
+        
+        if (shootChance > rnd)
+        {
+            CannonShell.Create(shellSpawnPosition.position, target, transform.tag);
+        }
+    }
+
     public void EnableShild()
     {
-         HasEnemyShild = true;
-         Transform pfPlayerShild = Resources.Load<Transform>("pfEnemyShild");
-         Shild.Create(shildSpawnPoint.position, pfPlayerShild);
+        HasEnemyShild = true;
+        ShildTimerEnabled = true;
+        Transform pfPlayerShild = GameAssets.Instance.pfEnemyShild;
+        Shild.Create(shildSpawnPoint.position, pfPlayerShild);
     }
 }
