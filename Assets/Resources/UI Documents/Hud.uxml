@@ -1,0 +1,33 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Style.uss?fileID=7433441132597879392&amp;guid=344b92248e484a04a827bf2012ca5833&amp;type=3#Style" />
+    <ui:VisualElement name="background" style="background-color: rgba(0, 0, 0, 0); flex-grow: 1; align-items: flex-start; flex-direction: row; flex-wrap: nowrap; flex-shrink: 1; height: 100%; background-image: none; width: 100%;">
+        <ui:VisualElement name="enemyHudContainer" style="width: 40%; height: 100%; top: 0; left: 0; max-width: 100%; max-height: 100%; flex-grow: 1;">
+            <ui:VisualElement name="healthbar" style="height: 30px; width: 500px; left: 50px; top: 50px;">
+                <ui:VisualElement name="background" style="flex-grow: 1; background-color: rgb(202, 202, 202); -unity-background-scale-mode: stretch-to-fill; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+                    <ui:VisualElement name="enemyHealthBar" style="flex-grow: 1; -unity-background-image-tint-color: rgb(190, 190, 190); transform-origin: left bottom; background-color: rgb(33, 180, 120); border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="pauseBtnContainer" style="justify-content: flex-start; width: 20%; height: 100%; align-items: center; top: 0; max-width: 100%; max-height: 100%; flex-grow: 1;">
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="pauseBtn" class="circleBtn-style" style="background-color: rgba(255, 255, 255, 0);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="playerHudContainer" style="width: 40%; height: 100%; top: 0; left: 0; align-items: flex-end; right: 0; bottom: 0; max-width: 100%; max-height: 100%; flex-grow: 1;">
+            <ui:VisualElement name="healthbar" style="height: 30px; width: 500px; top: 50px; right: 50px;">
+                <ui:VisualElement name="background" style="flex-grow: 1; background-color: rgb(202, 202, 202); -unity-background-scale-mode: stretch-to-fill; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+                    <ui:VisualElement name="playerHealthBar" style="flex-grow: 1; -unity-background-image-tint-color: rgb(190, 190, 190); transform-origin: center; background-color: rgb(33, 180, 120); border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; max-width: none; align-items: flex-end; -unity-text-align: upper-left; flex-direction: row-reverse; left: initial; rotate: 180deg;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="shildActivationContainer" style="width: 40%; height: 20%; align-items: flex-end; justify-content: flex-end; bottom: 0; left: 60%; flex-grow: 1;">
+        <ui:VisualElement name="shildBtnContainer" style="width: 100%; height: 100%; align-items: flex-end; justify-content: flex-end; right: 30px; bottom: 20px;">
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="shildBtn" class="circleBtn-style" style="background-image: url(&apos;project://database/Assets/Textures/ShildIcon.png?fileID=21300000&amp;guid=3d1b106df93d5744da70ab31f0e83467&amp;type=3#ShildIcon&apos;); background-color: rgba(255, 255, 255, 0); top: 0; align-items: flex-end; justify-content: space-around; flex-direction: column; -unity-text-align: lower-left; transform-origin: center; overflow: visible; bottom: 0; right: 0;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="shildBtnDisabledContainer" style="display: none; position: absolute; flex-grow: 1; bottom: 0; visibility: visible; overflow: visible; opacity: 1;">
+            <ui:VisualElement name="timerBackground" style="width: 250px; height: 80px; right: 80px; background-color: rgb(255, 255, 255); border-top-left-radius: 40px; border-bottom-left-radius: 40px; border-top-right-radius: 40px; border-bottom-right-radius: 40px; overflow: visible; visibility: visible; flex-direction: column; align-items: stretch; justify-content: flex-start; position: relative; bottom: 30px; display: flex;">
+                <ui:Label text="0:00" display-tooltip-when-elided="true" name="timerText" style="color: rgb(0, 0, 0); height: 100%; -unity-font-style: normal; -unity-font: url(&apos;project://database/Assets/Resources/supercell-magic.ttf?fileID=12800000&amp;guid=9c3bf88ba65542c458dbcfa9f4649825&amp;type=3#supercell-magic&apos;); width: 100%; font-size: 50px; justify-content: center; align-items: center; position: relative; -unity-text-align: middle-center; -unity-font-definition: resource(&apos;supercell-magic SDF&apos;);" />
+            </ui:VisualElement>
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="shildBtnDisabled" enable-rich-text="true" focusable="true" style="background-image: url(&apos;project://database/Assets/Textures/DisabledShildBtn.png?fileID=21300000&amp;guid=be3694f385063044baad82908ef12d17&amp;type=3#DisabledShildBtn&apos;); width: 100px; height: 100px; background-color: rgba(142, 142, 142, 0); justify-content: center; align-items: stretch; bottom: 20px; right: 30px; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; -unity-background-image-tint-color: rgb(255, 255, 255); -unity-font-definition: none; overflow: visible; display: flex; visibility: visible; position: absolute;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
