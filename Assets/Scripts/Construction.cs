@@ -20,14 +20,10 @@ public class Construction : MonoBehaviour
             {
                 PlayerControl.HasShild = false;
             }
-
-            if (shild.CompareTag("Enemy"))
-            {
-                EnemyAI.HasEnemyShild = false;
-            }
-        } 
+        }
+        
         Instantiate(GameAssets.Instance.pfTowerDestroyedParticles, transform.position, Quaternion.identity);
         SoundManager.Instance.PlaySound(SoundManager.Sound.BuildingDestroy);
-        Destroy(gameObject);       
+        Destroy(gameObject);
     }
 }

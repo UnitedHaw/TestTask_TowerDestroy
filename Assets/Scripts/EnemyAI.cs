@@ -102,13 +102,10 @@ public class EnemyAI : MonoBehaviour
 
         for (int i = 0; i < hitsInfo.Length; i++)
         {
-            if (hitsInfo[i].collider != null)
+            if (hitsInfo[i].collider != null && hitsInfo[i].collider.CompareTag("Player"))
             {
                 Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.red);
-                if (hitsInfo[i].collider.CompareTag("Player"))
-                {
-                    RandomShooting(hitsInfo[i].point * shootTargetOffset);
-                }
+                RandomShooting(hitsInfo[i].point * shootTargetOffset);
             }
         }
     }
@@ -116,7 +113,7 @@ public class EnemyAI : MonoBehaviour
     private void RandomShooting(Vector3 target)
     {
         int rnd = Random.Range(0, 1000);
-        int shootChance = 10;
+        int shootChance = 15;
         
         if (shootChance > rnd)
         {

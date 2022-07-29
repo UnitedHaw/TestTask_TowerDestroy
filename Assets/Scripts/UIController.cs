@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
+    public static UIController Instance { get; private set; }
 
     [SerializeField] private HealthSystem playerHealthSystem;
     [SerializeField] private HealthSystem enemyHealthSystem;
@@ -19,6 +20,7 @@ public class UIController : MonoBehaviour
     public VisualElement playerHealthBar;
     public VisualElement enemyHealthBar;
     public Label shildActivationTimer;
+    public Label pauseMenuLabel;
 
     private float shildDisableTimer = 15f;
     private float shildDisableTimeLeft;
@@ -27,6 +29,7 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         hudtransform = transform.GetChild(0);
         pauseMenuTransform = transform.GetChild(1);
     }
@@ -39,6 +42,7 @@ public class UIController : MonoBehaviour
         shildActivationBtn = hudRoot.Q<Button>("shildBtn");
         shildBtnDisabledContainer = hudRoot.Q<VisualElement>("shildBtnDisabledContainer");
         shildActivationTimer = hudRoot.Q<Label>("timerText");
+        pauseMenuLabel = pauseMenuRoot.Q<Label>("title");
         resumeBtn = pauseMenuRoot.Q<Button>("resumeBtn");
         restartBtn = pauseMenuRoot.Q<Button>("restartBtn");
 
@@ -114,6 +118,15 @@ public class UIController : MonoBehaviour
                 Show(shildActivationBtn);
             }
         }
+    }
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+        pauseMenuLabel.text = "Game Over!";
+        Show(pauseMenuRoot);
+        Hide(hudRoot);
+        Hide(resumeBtn);
+
     }
 
     public void Show(VisualElement visualElement)
