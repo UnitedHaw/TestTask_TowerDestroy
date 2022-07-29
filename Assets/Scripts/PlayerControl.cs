@@ -19,8 +19,6 @@ public class PlayerControl : MonoBehaviour
     private Shild shildTransform;
     private Vector3 touchStartPosition;
     private Touch touch;
-
-
     private void Awake()
     {
         Instance = this;
@@ -34,7 +32,6 @@ public class PlayerControl : MonoBehaviour
         GetMouseInput();
         GetTouchInput();
     }
-
     private void GetMouseInput()
     {
         if(Input.GetMouseButton(0))
@@ -85,7 +82,6 @@ public class PlayerControl : MonoBehaviour
             CannonShell.Create(shellSpawnPoint.position, GetShotAimPosition(), transform.tag);
         }  
     }
-
     public void EnableShild()
     {
         if (HasShild != true && shildTransform == null)

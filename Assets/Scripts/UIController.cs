@@ -86,7 +86,6 @@ public class UIController : MonoBehaviour
             SceneManager.LoadScene(0);
         });
     }
-
     private void EnemyHealthSystem_OnDamaged(object sender, System.EventArgs e)
     {
         enemyHealthBar.style.width = new StyleLength(Length.Percent(enemyHealthSystem.GetHealthAmount()));

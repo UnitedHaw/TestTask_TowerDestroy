@@ -11,14 +11,18 @@ public class EnemyAI : MonoBehaviour
     private Transform cannonAim;
     private WaitForSeconds delay;
 
-    private float shootTargetOffset = 5f;
+    private float shootTargetOffset = 4f;
     private float minRotationAngle = -0.9f;
     private float maxRotationAngle = 0f;
     private float rayDistance = 100f;
-    private float shildEnableAtteptInterval = 5f;
+    private float shildEnableAtteptInterval = 3f;
     private float shildColdown = 15f;
     private bool inUpperDir;
     private bool inDownDir;
+
+    private float shootTimer;
+    private float shootTimerMax = 0.3f;
+
 
     private bool ShildTimerEnabled;
     private void Awake()
@@ -38,7 +42,8 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         CannonRotationHandler();
-        EnemyScaner();     
+        EnemyScaner();
+        ShotDelay();
     }
 
     private IEnumerator TryEnableShild()
@@ -105,16 +110,31 @@ public class EnemyAI : MonoBehaviour
             if (hitsInfo[i].collider != null && hitsInfo[i].collider.CompareTag("Player"))
             {
                 Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.red);
-                RandomShooting(hitsInfo[i].point * shootTargetOffset);
+                if(shootTimer < 0)
+                {
+                    RandomShooting(hitsInfo[i].point * shootTargetOffset);
+                    shootTimer += shootTimerMax;
+                }     
+            }
+            else
+            {
+                Debug.DrawRay(cannonAim.position, cannonAim.up * rayDistance, Color.green);
             }
         }
+    }
+    private void ShotDelay()
+    {
+        shootTimer -= Time.deltaTime;
+        if (Mathf.Abs(shootTimer) > shootTimerMax)
+            shootTimer = shootTimerMax;
     }
 
     private void RandomShooting(Vector3 target)
     {
-        int rnd = Random.Range(0, 1000);
-        int shootChance = 15;
         
+        int shootChance = 40;
+        var rnd = Random.Range(0, 101);
+        Debug.Log(rnd);
         if (shootChance > rnd)
         {
             CannonShell.Create(shellSpawnPosition.position, target, transform.tag);
