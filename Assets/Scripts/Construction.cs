@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Construction : MonoBehaviour
 {
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private Transform enemyTransform;
     private HealthSystem healthSystem;
     private void Start()
     {
@@ -13,6 +15,11 @@ public class Construction : MonoBehaviour
     }
     private void HealthSystem_OnDied(object sender, System.EventArgs e)
     {
+        if (transform == playerTransform || enemyTransform)
+        {
+            UIController.Instance.GameOver();
+        }
+
         Shild shild = GetComponent<Shild>();
         if(shild != null)
         {
@@ -20,14 +27,10 @@ public class Construction : MonoBehaviour
             {
                 PlayerControl.HasShild = false;
             }
-
-            if (shild.CompareTag("Enemy"))
-            {
-                EnemyAI.HasEnemyShild = false;
-            }
-        } 
+        }
+        
         Instantiate(GameAssets.Instance.pfTowerDestroyedParticles, transform.position, Quaternion.identity);
         SoundManager.Instance.PlaySound(SoundManager.Sound.BuildingDestroy);
-        Destroy(gameObject);       
+        Destroy(gameObject);
     }
 }
